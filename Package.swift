@@ -3,16 +3,19 @@
 
 import PackageDescription
 
-let packageName = "CardIO"
-let libraryName = "CardIO"
-
 let package = Package(
-    name: packageName,
+    name: "CardIO",
     platforms: [ .iOS(.v13) ],
     products: [
-        .library(name: libraryName, targets: [libraryName])
+        .library(name: "CardIO", 
+                 targets: ["CardIOScanner"])
     ],
     targets: [
-        .binaryTarget(name: libraryName, path: "./CardIO.xcframework")
+        .target(
+            name: "CardIOScanner",
+            dependencies: [.target(name: "CardIO")],
+            resources: [.copy("Resources/PrivacyInfo.xcprivacy")]),
+        .binaryTarget(name: "CardIO",
+                      path: "./CardIO.xcframework")
     ]
 )
